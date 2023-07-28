@@ -4,7 +4,19 @@ services:
   tb:
     build:
       context: .
+    depends_on:
+      - dev-bot
     environment:
       - BOT_NAME=${BOT_NAME_B}
       - BOT_TOKEN=${BOT_TOKEN_B}
     restart: always
+
+  dev-bot:
+    image: mysql
+    restart: always
+    container_name: dev-bot
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: 'dev-bot'
+      MYSQL_ROOT_PASSWORD: root
