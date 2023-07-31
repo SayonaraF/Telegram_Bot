@@ -19,6 +19,6 @@ public class StopCommandTest extends AbstractCommandTest {
 
     @Override
     Command getCommand() {
-        return new StopCommand(messageService);
+        return new StopCommand(messageService, userService);
     }
 }
