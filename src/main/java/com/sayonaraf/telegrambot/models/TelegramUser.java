@@ -2,10 +2,8 @@ package com.sayonaraf.telegrambot.models;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "tg_user", schema = "dev-bot")
@@ -14,12 +12,11 @@ import javax.persistence.Table;
 @ToString
 @RequiredArgsConstructor
 public class TelegramUser {
-
     @Id
     @Column(name = "chat_id")
-    private String chatId;
-
+    private long chatId;
     @Column(name = "active")
     private boolean active;
-
+    @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
+    private List<Channel> channels;
 }

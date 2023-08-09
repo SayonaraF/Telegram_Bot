@@ -7,7 +7,7 @@ public enum CommandName {
     HELP("/help"),
     NO(""),
     STAT("/stat"),
-    CHANNELS("/channels");
+    SUB_CHANNEL("/subchannel");
 
     private final String commandName;
 
