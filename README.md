@@ -2,6 +2,8 @@
 
 Telegram bot for tracking news
 
+/* In developing */
+
 ## Deployment 
 
 Required software:
