@@ -1,6 +1,7 @@
 package com.sayonaraf.telegrambot.bot;
 
 import com.sayonaraf.telegrambot.command.CommandContainer;
+import com.sayonaraf.telegrambot.service.RSSReaderService;
 import com.sayonaraf.telegrambot.service.SendBotMessageService;
 import com.sayonaraf.telegrambot.service.TelegramUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +20,9 @@ public class TelegramBot extends TelegramLongPollingBot {
     private String botName;
 
     @Autowired
-    public TelegramBot(@Value("${bot.token}") String botToken, TelegramUserService userService) {
+    public TelegramBot(@Value("${bot.token}") String botToken, TelegramUserService userService, RSSReaderService readerService) {
         super(botToken);
-        this.commandContainer = new CommandContainer(userService, new SendBotMessageService(this));
+        this.commandContainer = new CommandContainer(userService, new SendBotMessageService(this), readerService);
     }
 
     @Override

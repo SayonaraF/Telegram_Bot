@@ -8,11 +8,12 @@ import static com.sayonaraf.telegrambot.command.CommandName.*;
 public class HelpCommand implements Command {
     private final SendBotMessageService messageService;
     public final static String HELP_MESSAGE = String.format("Доступные команды:\n\n"
-                                    + "%s - начать работу со мной\n"
-                                    + "%s - закончить работу со мной\n"
+                                    + "%s - начать работу с ботом\n"
+                                    + "%s - закончить работу с ботом\n"
+                                    + "%s - выбрать подписки\n"
                                     + "%s - получить помощь\n"
                                     + "%s - статистика пользователей", START.getCommandName(),
-                                    STOP.getCommandName(), HELP.getCommandName(), STAT.getCommandName());
+                                    STOP.getCommandName(), CHANNELS.getCommandName(), HELP.getCommandName(), STAT.getCommandName());
 
     public HelpCommand(SendBotMessageService messageService) {
         this.messageService = messageService;

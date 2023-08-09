@@ -10,7 +10,8 @@ import java.util.Optional;
 public class StartCommand implements Command {
     private final SendBotMessageService messageService;
     private final TelegramUserService userService;
-    public final static String START_MESSAGE = "Я начал свою работу";
+    public final static String START_MESSAGE = "Вас приветствует NewsTrackerBot.\nЯ могу отслеживать статьи с различных " +
+            "новостных порталов. Чтобы выбрать каналы введите команду /channels";
 
     public StartCommand(SendBotMessageService messageService, TelegramUserService userService) {
         this.messageService = messageService;
