@@ -20,7 +20,7 @@ public class StopCommand implements Command {
     @Override
     public void execute(Update update) {
         messageService.sendMessage(update.getMessage().getChatId(), STOP_MESSAGE);
-        Optional<TelegramUser> userOptional = userService.retrieveByChatId(update.getMessage().getChatId().toString());
+        Optional<TelegramUser> userOptional = userService.getByChatId(update.getMessage().getChatId());
 
         if (userOptional.isPresent()) {
             TelegramUser user = userOptional.get();

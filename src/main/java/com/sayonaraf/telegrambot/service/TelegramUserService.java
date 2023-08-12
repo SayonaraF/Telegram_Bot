@@ -21,11 +21,11 @@ public class TelegramUserService {
         userRepository.save(telegramUser);
     }
 
-    public Optional<TelegramUser> retrieveByChatId(String chatId) {
+    public Optional<TelegramUser> getByChatId(Long chatId) {
         return userRepository.findById(chatId);
     }
 
-    public List<TelegramUser> retrieveAllActiveUsers() {
+    public List<TelegramUser> getAllActiveUsers() {
         return userRepository.findAllByActiveTrue();
     }
 }

@@ -7,7 +7,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 public class StatCommand implements Command {
     private final SendBotMessageService messageService;
     private final TelegramUserService userService;
-    public final static String STAT_MESSAGE = "Кличество активных пользователей: %s";
+    public final static String STAT_MESSAGE = "Количество активных пользователей: %s";
 
     public StatCommand(SendBotMessageService messageService, TelegramUserService userService) {
         this.messageService = messageService;
@@ -16,7 +16,7 @@ public class StatCommand implements Command {
 
     @Override
     public void execute(Update update) {
-        int activeUser = userService.retrieveAllActiveUsers().size();
+        int activeUser = userService.getAllActiveUsers().size();
         messageService.sendMessage(update.getMessage().getChatId(), String.format(STAT_MESSAGE, activeUser));
     }
 }

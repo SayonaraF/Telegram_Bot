@@ -10,7 +10,8 @@ import java.util.Optional;
 public class StartCommand implements Command {
     private final SendBotMessageService messageService;
     private final TelegramUserService userService;
-    public final static String START_MESSAGE = "Я начал свою работу";
+    public final static String START_MESSAGE = "Вас приветствует NewsTrackerBot.\nЯ могу отслеживать статьи с различных " +
+            "новостных порталов. Чтобы выбрать каналы введите команду /channels";
 
     public StartCommand(SendBotMessageService messageService, TelegramUserService userService) {
         this.messageService = messageService;
@@ -19,8 +20,8 @@ public class StartCommand implements Command {
 
     @Override
     public void execute(Update update) {
-        String chatId = update.getMessage().getChatId().toString();
-        Optional<TelegramUser> userOptional = userService.retrieveByChatId(chatId);
+        Long chatId = update.getMessage().getChatId();
+        Optional<TelegramUser> userOptional = userService.getByChatId(chatId);
 
         TelegramUser user;
         if (userOptional.isPresent()) {
@@ -33,6 +34,6 @@ public class StartCommand implements Command {
         user.setActive(true);
         userService.save(user);
 
-        messageService.sendMessage(update.getMessage().getChatId(), START_MESSAGE);
+        messageService.sendMessage(chatId, START_MESSAGE);
     }
 }
