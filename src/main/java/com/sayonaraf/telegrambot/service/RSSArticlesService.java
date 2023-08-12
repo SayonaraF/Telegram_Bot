@@ -33,14 +33,15 @@ public class RSSArticlesService {
     }
 
     private void sendNewArticles(Channel channel) {
-        List<ArticleArgs> args = findNewPosts(channel.getLink(), channel.getLastLink());
+        List<ArticleArgs> newPosts = findNewPosts(channel.getLink(), channel);
 
         List<String> messages = new ArrayList<>();
-        for (ArticleArgs articleArgs : args) {
+        for (ArticleArgs post : newPosts) {
             String message = String.format("Вышла новая статья на сайте %s.\n\n" +
-                    "Описание: %s\n\n" +
-                    "Ссылка: %s", articleArgs.getChannelLink(), articleArgs.getTitle(),
-                    articleArgs.getLink());
+                    "Описание: %s\n" +
+                            "%s\n\n" +
+                    "Ссылка: %s\n", post.getChannelLink(), post.getTitle(), post.getDescription(),
+                    post.getLink());
             messages.add(message);
         }
 
@@ -54,25 +55,27 @@ public class RSSArticlesService {
             }
         }
 
-        if (!args.isEmpty()) {
-            channel.setLastLink(args.get(0).getLink());
+        if (!newPosts.isEmpty()) {
+            channel.setLastLink(newPosts.get(0).getLink());
+            channel.setPubDate(newPosts.get(0).getDate());
             subChannelService.save(channel);
         }
     }
 
-    public static List<ArticleArgs> findNewPosts(String source, String lastLink) {
-        List<ArticleArgs> articleArgs = getRSS(source);
+    public static List<ArticleArgs> findNewPosts(String source, Channel channel) {
+        List<ArticleArgs> allPosts = getRSS(source);
 
-        List<ArticleArgs> result = new ArrayList<>();
-        for (ArticleArgs args : articleArgs) {
-            if (!args.getLink().equalsIgnoreCase(lastLink)) {
-                result.add(args);
+        List<ArticleArgs> newPosts = new ArrayList<>();
+        for (ArticleArgs post : allPosts) {
+            if (!post.getLink().equalsIgnoreCase(channel.getLastLink()) &&
+                    post.getDate().after(channel.getPubDate())) {
+                newPosts.add(post);
             } else {
                 break;
             }
         }
 
-        return result;
+        return newPosts;
     }
 
     private static List<ArticleArgs> getRSS(String source) {

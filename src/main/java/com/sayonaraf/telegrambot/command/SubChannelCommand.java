@@ -14,7 +14,6 @@ import static com.sayonaraf.telegrambot.command.CommandName.SUB_CHANNEL;
 public class SubChannelCommand implements Command {
     private final SendBotMessageService messageService;
     private final SubChannelService subChannelService;
-    public static final String SUB_CHANNEL_MESSAGE = "Команда";
 
     public SubChannelCommand(SendBotMessageService messageService, SubChannelService subChannelService) {
         this.messageService = messageService;
@@ -27,24 +26,29 @@ public class SubChannelCommand implements Command {
             sendChannelNamesList(update.getMessage().getChatId());
         }
 
-        String channelName = update.getMessage().getText().split(" ")[1].toUpperCase();
+        if (update.getMessage().getText().split(" ").length > 1) {
+            String[] query = update.getMessage().getText().split(" ");
+            subCurrentChannel(update.getMessage().getChatId(), query);
+        }
+    }
 
+    private void subCurrentChannel(Long chatId, String[] query) {
         List<String> channelNames = new ArrayList<>();
         for (ChannelName name : ChannelName.values()) {
             channelNames.add(name.toString());
         }
 
+        String channelNameFromQuery = query[1].toUpperCase();
         String message;
-        long chatId = update.getMessage().getChatId();
-        if (channelNames.contains(channelName)) {
-            subChannelService.save(chatId, channelName);
+        if (channelNames.contains(channelNameFromQuery)) {
+            subChannelService.save(chatId, channelNameFromQuery);
 
-            message = "Вы подписались на канал: " + channelName;
+            message = "Вы подписались на канал: " + channelNameFromQuery;
         } else {
             message = "В моем списке нет такого канала.";
         }
 
-        messageService.sendMessage(update.getMessage().getChatId(), message);
+        messageService.sendMessage(chatId, message);
     }
 
     private void sendChannelNamesList(Long chatId) {
