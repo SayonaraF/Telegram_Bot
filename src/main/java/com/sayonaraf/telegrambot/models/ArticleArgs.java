@@ -10,4 +10,5 @@ public class ArticleArgs {
     private String link;
     private String description;
     private Date date;
+    private String channelLink;
 }

@@ -50,7 +50,7 @@ public class SubChannelCommand implements Command {
     private void sendChannelNamesList(Long chatId) {
         String message = "Чтобы подписаться на RSS канал передайте определенную команду вместе с названием канала.\n\n" +
                 "Пример: '/subChannel RBK'\n\n" +
-                "Вот список всех каналов, которые у меня есть:\n\n" +
+                "Вот список всех каналов, которые у меня есть (в дальнейшем он будет больше):\n\n" +
                 "%s";
         String channelsList = Arrays.stream(ChannelName.values()).map(name -> String.format("%s - %s\n", name, name.getChannelName()))
                 .collect(Collectors.joining());

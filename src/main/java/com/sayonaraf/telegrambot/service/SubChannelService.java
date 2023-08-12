@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.ws.rs.NotFoundException;
-import java.util.Optional;
+import java.util.List;
 
 @Service
 public class SubChannelService {
@@ -29,5 +29,14 @@ public class SubChannelService {
         channel.addUser(telegramUser);
 
         channelRepository.save(channel);
+    }
+
+    @Transactional
+    public void save(Channel channel) {
+        channelRepository.save(channel);
+    }
+
+    public List<Channel> getChannelLinks() {
+        return channelRepository.findAll();
     }
 }
