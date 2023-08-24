@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static java.util.Objects.isNull;
@@ -22,6 +23,8 @@ public class Channel {
     private String link;
     @Column(name = "last_link")
     private String lastLink;
+    @Column(name = "pub_date")
+    private Date pubDate;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "channel_x_user",

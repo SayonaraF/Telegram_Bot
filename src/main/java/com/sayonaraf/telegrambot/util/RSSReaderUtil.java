@@ -22,19 +22,20 @@ public class RSSReaderUtil {
         List<ArticleArgs> results = new ArrayList<>();
         
         for (Object o : syndFeed.getEntries()) {
-            results.add(mapToArticle((SyndEntry) o));
+            results.add(mapToArticle((SyndEntry) o, syndFeed));
         }
 
         return results;
     }
 
-    private static ArticleArgs mapToArticle(SyndEntry syndEntry) {
+    private static ArticleArgs mapToArticle(SyndEntry syndEntry, SyndFeed syndFeed) {
         ArticleArgs articleArgs = new ArticleArgs();
 
         articleArgs.setTitle(syndEntry.getTitle());
         articleArgs.setLink(syndEntry.getLink());
         articleArgs.setDescription(syndEntry.getDescription().getValue());
         articleArgs.setDate(syndEntry.getPublishedDate());
+        articleArgs.setChannelLink(syndFeed.getLink());
 
         return articleArgs;
     }

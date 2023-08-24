@@ -8,7 +8,7 @@ import static com.sayonaraf.telegrambot.command.CommandName.*;
 public class HelpCommand implements Command {
     private final SendBotMessageService messageService;
     public final static String HELP_MESSAGE = String.format("Доступные команды:\n\n"
-                                    + "Включение/Выключение:"
+                                    + "Включение/Выключение:\n"
                                     + "%s - начать работу с ботом\n"
                                     + "%s - закончить работу с ботом\n\n"
                                     + "Подписки:\n"
